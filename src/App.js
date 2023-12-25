@@ -1,5 +1,14 @@
+import { ConfigProvider, Button } from 'antd';
+import NavBar from './component/NavBar';
+import AddBlogPage from './pages/AddBlogPage';
+
 function App() {
-	return <div className="App">Hello world</div>;
+	return (
+		<ConfigProvider>
+			<NavBar />
+			<AddBlogPage />
+		</ConfigProvider>
+	);
 }
 
 export default App;
