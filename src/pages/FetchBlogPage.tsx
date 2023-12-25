@@ -18,9 +18,14 @@ const FetchBlogPage:React.FC = () => {
         renderItem={(item, index) => (
         <List.Item>
             <List.Item.Meta
-            avatar={<Avatar src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`} />}
+            avatar={<Avatar shape='square' size={100} src={`https://firebasestorage.googleapis.com/v0/b/catafy-26ec0.appspot.com/o/stores%2Fhacker%2FstoreConfig%2Fbanner?alt=media&token=b2768564-2d67-47e5-b79d-4aa63914d27f`} />}
             title={<a href="https://ant.design">{item.title}</a>}
-            description={item.content}
+            description={
+            <>
+            {item.content} <br></br>
+            {item.date ?? "Jan 08 2005"}
+            </>
+            }
             />
         </List.Item>
         )}
