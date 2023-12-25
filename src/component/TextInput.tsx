@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Input, Button } from 'antd';
-import { handleAddData } from '../firebase/handler/handleAddData';
+import { handleAddData } from '../firebase/handler';
 import { BlogData } from '../types/BlogData';
 
 const { TextArea } = Input;
@@ -10,7 +10,7 @@ const TextInput: React.FC = () => {
   const [content, setContent] = useState<string>('');
 
   const handleSubmit = () => {
-    const c = new BlogData(title, content)
+    const c:BlogData = {title:title, content: content}
     handleAddData(c)
   }
 
