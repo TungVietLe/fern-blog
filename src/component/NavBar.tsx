@@ -1,74 +1,40 @@
 import React, { useState } from 'react';
+import { Link, Outlet } from 'react-router-dom';
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 
 const items: MenuProps['items'] = [
   {
-    label: 'Navigation One',
+    label: (<Link to={"/admin"}>Admin</Link>),
     key: 'mail',
     icon: <MailOutlined />,
   },
   {
-    label: 'Navigation Two',
-    key: 'app',
+    label: (<Link to={"/blogs"}>Blogs</Link>),
     icon: <AppstoreOutlined />,
-    disabled: true,
-  },
-  {
-    label: 'Navigation Three - Submenu',
-    key: 'SubMenu', 
-    icon: <SettingOutlined />,
-    children: [
-      {
-        type: 'group',
-        label: 'Item 1',
-        children: [
-          {
-            label: 'Option 1',
-            key: 'setting:1',
-          },
-          {
-            label: 'Option 2',
-            key: 'setting:2',
-          },
-        ],
-      },
-      {
-        type: 'group',
-        label: 'Item 2',
-        children: [
-          {
-            label: 'Option 3',
-            key: 'setting:3',
-          },
-          {
-            label: 'Option 4',
-            key: 'setting:4',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    label: (
-      <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
-        Navigation Four - Link
-      </a>
-    ),
+
     key: 'alipay',
+  },
+  {
+    label: (<a href={"https://tungle.tech"} target='_blank'>Me</a>),
+    key: 'me',
   },
 ];
 
-const App: React.FC = () => {
-  const [current, setCurrent] = useState('mail');
+const NavBar: React.FC = () => {
+  const [current, setCurrent] = useState('');
 
   const onClick: MenuProps['onClick'] = (e) => {
     console.log('click ', e);
     setCurrent(e.key);
   };
+  return (
+    <>
+    <Menu theme='light' onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />
+    <Outlet/>
+    </>
+  )
+}
 
-  return <Menu theme='dark' onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />;
-};
-
-export default App;
+export default NavBar;

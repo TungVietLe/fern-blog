@@ -1,11 +1,9 @@
 import React from 'react';
-import { Button } from 'antd';
-import { handleAddData } from '../firebase/handler';
 import { FC } from 'react';
 import TextInput from '../component/TextInput';
 import ImgUpload from '../component/ImgUpload';
 
-const AddBlogPage:FC = ()=> {
+const AdminPage:FC = ()=> {
 	return (
 		<>
 			<TextInput/>
@@ -14,4 +12,4 @@ const AddBlogPage:FC = ()=> {
 	);
 }
 
-export default AddBlogPage;
+export default AdminPage;
