@@ -1,16 +1,14 @@
-
-
-export class Content 
+export class BlogData 
 {
 	private id: string;
 	private title:string;
-	private text:string;
+	private content:string;
 	private date:string;
 	
-	constructor(id:string, title:string) {
-		this.id = id;
+	constructor(title:string, content:string) {
+		this.id = "";
 		this.title = title;
-		this.text = '';
+		this.content = content;
 		this.date = '';
 	}
 
@@ -26,5 +24,14 @@ export class Content
 	}
 	setTitle(t:string) {
 		this.title = t;
+	}
+
+	toDictionary():Object{
+		return {
+			id: this.id,
+			title: this.title,
+			content: this.content,
+			date:this.date
+		}
 	}
 }
