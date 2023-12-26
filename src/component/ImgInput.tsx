@@ -1,32 +1,50 @@
 import React from 'react';
-import {Signal, computed} from "@preact/signals-react"
+import {Input} from "antd";
+import {Signal, signal, useSignal, computed} from "@preact/signals-react"
+import { ImgUpData } from '../types/BlogData';
+const {TextArea} = Input
 
 type ImgInputProps = {
-    destination:Signal<File[]>
-    count:Signal<number>
+    destination:Signal<ImgUpData[]>
 }
-const ImgInput:React.FC<ImgInputProps> = ({destination, count}) => {
+const ImgInput:React.FC<ImgInputProps> = ({destination}) => {
+    const desireId = signal<string>("")
   return (
     <>
-    {/* Duplicate input based on count  */}
-      {computed(()=>{
-        const element = []
-        for(let i = 0; i < count.value; i++) {
-          element.push(<input
-          key={i}
-          type="file"
-          onChange={(e) => {
-            if (e.target.files && e.target.files[0]) {
-              destination.value = ([...destination.value, e.target.files[0]]);
-              console.log(destination.value)
-            } else {
-              console.warn("No file selected");
-            }
-          }}
-          />)
+        <input
+            type="file"
+            onChange={(e) => {
+                if (e.target.files && e.target.files[0]) {
+                const newFile = e.target.files[0]
+                const newImgData = {id:newFile.name, file: newFile}
+                destination.value = [...destination.value, newImgData];
+                desireId.value = newFile.name
+                console.log(destination.value)
+                } else {
+                console.warn("No file selected");
+                }
+            }}
+        />
+        {
+            // computed since value depend on desireID
+            computed(()=>{
+                return (
+                <>
+                    <TextArea
+                        value={desireId.value}
+                        onChange={(e) => {
+                            desireId.value = e.target.value
+                            const temp = [...destination.value]
+                            temp[temp.length-1].id = desireId.value
+                            destination.value = temp
+                        }}
+                        placeholder="Image ID"
+                        autoSize
+                        disabled={destination.value.length == 0}
+                    />
+                </>)
+            })
         }
-        return element;
-      })}
     </>
   )
 }
