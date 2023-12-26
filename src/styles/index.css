@@ -12,3 +12,15 @@ pre {
     padding: 30px;
     border-radius: 12px;
 }
+a {
+    color: rgb(226, 226, 226);
+    text-underline-offset: 3px;
+    transition-duration: 0.3s;
+    padding: 2px 4px;
+}
+a:hover {
+    color: white;
+    background-color: rgb(7, 97, 232);
+    text-decoration-color: transparent;
+    border-radius: 4px;
+}
