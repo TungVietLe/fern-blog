@@ -9,7 +9,6 @@ import Blog from './pages/Blog';
 
 function App() {
 	return (
-		<div style={backgroundDiv}>
 		<ConfigProvider theme={{algorithm: theme.darkAlgorithm}}> {/* ant design theme */}
 			<BrowserRouter>
 				<Routes>
@@ -22,7 +21,6 @@ function App() {
 				</Routes>
 			</BrowserRouter>
 		</ConfigProvider>
-		</div>
 	);
 }
 
@@ -38,7 +36,6 @@ const BlogRoutes:React.FC = () => {
 
 //Background div style
 const backgroundDiv: React.CSSProperties = {
-  position:"fixed", 
   color:"white", 
   backgroundColor:"black", 
   top:0,bottom:0,left:0,right:0, 
