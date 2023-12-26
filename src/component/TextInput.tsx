@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Input, Button } from 'antd';
 import { handleAddData } from '../firebase/handler';
 import { BlogData } from '../types/BlogData';
+import parse from "html-react-parser"
 
 const { TextArea } = Input;
 
@@ -32,6 +33,11 @@ const TextInput: React.FC = () => {
         autoSize={{ minRows: 6, maxRows: 20 }}
       />
 			<Button type='primary' onClick={handleSubmit}>Submit To DB</Button>
+
+      <div>
+        <h1>Preview</h1>
+        <div>{parse(content)}</div>
+      </div>
     </>
   );
 };

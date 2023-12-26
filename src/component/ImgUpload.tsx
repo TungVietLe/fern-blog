@@ -1,43 +1,42 @@
-import React from 'react';
-import { UploadOutlined } from '@ant-design/icons';
-import type { UploadProps } from 'antd';
+import React, {useState} from 'react';
 import { Button, Upload } from 'antd';
 
-const props: UploadProps = {
-  action: 'https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188',
-  onChange({ file, fileList }) {
-    if (file.status !== 'uploading') {
-      console.log(file, fileList);
+
+const App: React.FC = () => {
+  const [fileList, setFileList]= useState<File[]>([])
+  return (
+    <>
+    {/* <Upload
+      action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+      listType="picture"
+      onChange={(e) => setFileList({...fileList, e})}
+    >
+      <Button icon={<UploadOutlined />}>Upload</Button>
+    </Upload> */}
+    <input
+    type="file"
+    onChange={(e) => {
+      if (e.target.files && e.target.files[0]) {
+        setFileList([...fileList, e.target.files[0]]);
+        console.log(fileList)
+      } else {
+        // Handle the case where no file is selected
+        console.warn("No file selected");
+      }
+    }}
+    />
+    <Button onClick={()=>{console.log(fileList)}}>Test</Button>
+    {
+      fileList.map((f,index)=>{
+        return (
+          <div>
+            {<img src={URL.createObjectURL(f)} key={index} />}
+          </div>
+        );
+      })
     }
-  },
-  defaultFileList: [
-    {
-      uid: '1',
-      name: 'xxx.png',
-      status: 'uploading',
-      url: 'http://www.baidu.com/xxx.png',
-      percent: 33,
-    },
-    {
-      uid: '2',
-      name: 'yyy.png',
-      status: 'done',
-      url: 'http://www.baidu.com/yyy.png',
-    },
-    {
-      uid: '3',
-      name: 'zzz.png',
-      status: 'error',
-      response: 'Server Error 500', // custom error message to show
-      url: 'http://www.baidu.com/zzz.png',
-    },
-  ],
-};
+  </>
+  )
+}
 
-const ImgUpload: React.FC = () => (
-  <Upload {...props}>
-    <Button icon={<UploadOutlined />}>Upload</Button>
-  </Upload>
-);
-
-export default ImgUpload;
+export default App;
