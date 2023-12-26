@@ -38,7 +38,7 @@ const ImgInput:React.FC<ImgInputProps> = ({destination}) => {
                             temp[temp.length-1].id = desireId.value
                             destination.value = temp
                         }}
-                        placeholder="Image ID"
+                        placeholder="Image ID (number only)"
                         autoSize
                         disabled={destination.value.length == 0}
                     />

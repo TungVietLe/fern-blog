@@ -3,7 +3,7 @@ import { Input, Button } from 'antd';
 import { handleAddData } from '../firebase/handler';
 import { BlogData } from '../types/BlogData';
 import parse from "html-react-parser"
-
+import { fileList } from './ImgUpload';
 const { TextArea } = Input;
 
 const TextInput: React.FC = () => {
@@ -14,6 +14,9 @@ const TextInput: React.FC = () => {
     const c:BlogData = {title:title, content: content}
     handleAddData(c)
   }
+  const renderedContent = content.replace(/{{image(\d+)}}/g, (match, index) => {
+    return `<img src=${URL.createObjectURL(fileList.value[index]?.file)} />`;
+  });
 
   return (
     <>
@@ -36,7 +39,7 @@ const TextInput: React.FC = () => {
 
       <div>
         <h1>Preview</h1>
-        <div>{parse(content)}</div>
+        <div>{parse(renderedContent)}</div>
       </div>
     </>
   );

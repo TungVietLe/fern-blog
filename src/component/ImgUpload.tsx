@@ -6,8 +6,8 @@ import ImgPreview from './ImgPreview';
 import { ImgUpData } from '../types/BlogData';
 
 
+export const fileList = signal<ImgUpData[]>([])
 const ImgUpload: React.FC = () => {
-  const fileList = signal<ImgUpData[]>([])
   return (
     <>
     <Button onClick={()=>{console.log(fileList.value)}}>Test</Button>

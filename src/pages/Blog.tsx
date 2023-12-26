@@ -2,27 +2,22 @@ import React, {useEffect} from 'react';
 import { useParams } from 'react-router-dom';
 import parse from "html-react-parser"
 
+
 const Blog:React.FC = () => {
-    const { blogURL } = useParams()
-    const test:string = `
-      <p>
-        Also to test parser html <br>
-        fafaf
-      </p>
-      <img
-        width={200}
-        src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-      />
-      
-      <pre>hello world</pre>
-    `
+  const { blogURL } = useParams()
+  const test:string = `
+  {{image1}} {{image99}} 
+  `
+  const renderedContent = test.replace(/{{image(\d+)}}/g, (match, index) => {
+    return `<pre> ${index} </pre>`;
+  });
   
 
     return(
     <>
+      <div>{renderedContent}</div>
       <h1>{blogURL}</h1>
-      <div>{parse(test)}</div>
-      
+      <div>{parse(renderedContent)}</div>
     </>
   )
 };
