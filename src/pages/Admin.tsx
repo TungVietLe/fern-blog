@@ -4,7 +4,7 @@ import { Button } from 'antd';
 import TextInput from '../component/TextInput';
 import { signal, computed, } from '@preact/signals-react';
 import { BlogData, ImgUpData } from '../types/BlogData';
-import { handleAddData } from '../firebase/handler';
+import { handleAddData, handleUploadFile } from '../firebase/handler';
 import ImgInput from "../component/ImgInput"
 import ImgPreview from '../component/ImgPreview';
 import parse from "html-react-parser"
@@ -30,8 +30,11 @@ const previewContent = computed(()=>{
 
 const AdminPage:FC = ()=> {
 	const handleSubmit = () => {
-    	handleAddData(blogData.value)
+    	handleAddData(blogData.value, blogData.value.title, "blogs")
 		.then(()=>alert.value = "success")
+		imageList.value.map((elem)=>{
+			handleUploadFile(elem.file, `images/${blogData.value.title}/${elem.id}.png`)
+		})
   	}
 
 	//replace img string with HTML tag

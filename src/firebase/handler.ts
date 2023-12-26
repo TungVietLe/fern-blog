@@ -1,13 +1,13 @@
-import { collection, getDocs, addDoc } from "firebase/firestore";
+import { collection, getDocs, doc, setDoc } from "firebase/firestore";
+import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
 
-import { db } from './config';
+import { db, storage } from './config';
 import { BlogData } from '../types/BlogData';
 
-export async function handleAddData(data:BlogData) : Promise<void>
+export async function handleAddData(data:BlogData, id:string, folder:string) : Promise<void>
 {
 	try {
-		const docRef = await addDoc(collection(db, 'blogs'), data);
-		console.log('Document written with ID: ', docRef.id);
+       await setDoc(doc(db, `${folder}`, `${id}`), data);
 	} catch (e) {
 		console.error('Error adding document: ', e);
 	}
@@ -22,4 +22,51 @@ export async function handleGetAllDataInCollection(collectionName: string) : Pro
     r.push(doc.data() as BlogData)
     });
     return(r)
+}
+
+export function handleUploadFile(file:File, path:string) {
+    const storageRef = ref(storage, path);
+    uploadBytes(storageRef, file).then((url) => {
+        console.log('Uploaded a blob or file!');
+    });
+}
+
+export function handleReadAllFiles() {
+    const storageRef = ref(storage, "/images/afvawv");
+    listAll(storageRef)
+    .then((res) => {
+        const files = res.items;
+        
+        files.forEach((file) => {
+            console.log(file)
+        getDownloadURL(file)
+            .then((url:string) => {
+                    console.log(url)
+            })
+            .catch((error:string) => {
+            // Handle errors
+            });
+        });
+    })
+    .catch((error) => {
+        // Handle errors
+    });
+    
+}
+
+export function handleGetFileURL(path:string, name:string) : string
+{
+    const storageRef = ref(storage, `${path}`);
+    listAll(storageRef)
+    .then((res) => {
+        const files = res.items;
+        const target = files.find((elem)=>{return elem.name.slice(0, elem.name.lastIndexOf(".")) == name}) // ignore suffix, .png, .jpg...
+        getDownloadURL(target!).then((url)=>{
+            return url
+        })
+    })
+    .catch((error) => {
+        // Handle errors
+    });
+    return "fail to fetch"
 }
