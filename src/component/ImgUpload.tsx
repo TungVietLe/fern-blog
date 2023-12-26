@@ -1,42 +1,21 @@
 import React, {useState} from 'react';
 import { Button, Upload } from 'antd';
+import {Signal, signal, computed} from "@preact/signals-react"
+import ImgInput from "./ImgInput"
+import ImgPreview from './ImgPreview';
 
 
-const App: React.FC = () => {
-  const [fileList, setFileList]= useState<File[]>([])
+const ImgUpload: React.FC = () => {
+  const fileList = signal<File[]>([])
+  const fileCount = signal<number>(1)
   return (
     <>
-    {/* <Upload
-      action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-      listType="picture"
-      onChange={(e) => setFileList({...fileList, e})}
-    >
-      <Button icon={<UploadOutlined />}>Upload</Button>
-    </Upload> */}
-    <input
-    type="file"
-    onChange={(e) => {
-      if (e.target.files && e.target.files[0]) {
-        setFileList([...fileList, e.target.files[0]]);
-        console.log(fileList)
-      } else {
-        // Handle the case where no file is selected
-        console.warn("No file selected");
-      }
-    }}
-    />
-    <Button onClick={()=>{console.log(fileList)}}>Test</Button>
-    {
-      fileList.map((f,index)=>{
-        return (
-          <div>
-            {<img src={URL.createObjectURL(f)} key={index} />}
-          </div>
-        );
-      })
-    }
+    <Button onClick={()=>{fileCount.value++}}>+</Button>
+    <Button onClick={()=>{console.log(fileCount)}}>Test</Button>
+    <ImgInput destination={fileList} count={fileCount}/>
+    <ImgPreview data={fileList}/>
   </>
   )
 }
 
-export default App;
+export default ImgUpload;
