@@ -47,6 +47,7 @@ const Blog: React.FC = () => {
 			});
 		handleReadAllFiles(`images/${blogURL}`).then((result) => {
 			fetchedImgs.value = result;
+			console.log(result)
 		});
 	}, []);
 

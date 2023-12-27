@@ -20,9 +20,9 @@ const thumbnailFile = signal<ImgUpData[]>([]); // actually only store 1 file
 const AdminPage: FC = () => {
 	const handleSubmit = async () => {
 		imageList.value.map((elem) => {
-			handleUploadFile(elem.file, `images/${blogData.value.title}/${elem.id}.png`);
+			handleUploadFile(elem.file, `images/${blogData.value.title}/${elem.id}`);
 		});
-		const thumbnailURL = await handleUploadFile(thumbnailFile.value[0].file, `images/${blogData.value.title}/thumbnail.png`);
+		const thumbnailURL = await handleUploadFile(thumbnailFile.value[0].file, `images/${blogData.value.title}/thumbnail`);
 		blogData.value = { ...blogData.value, thumbnailURL: thumbnailURL };
 		handleAddData(blogData.value, blogData.value.title, 'blogs').then(() => (alert.value = 'success'));
 	};

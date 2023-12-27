@@ -93,9 +93,8 @@ export async function handleReadAllFiles(folder:string) : Promise<ImgDownData[]>
 
     await Promise.all(files.map(async (file) => {
         const url = await getDownloadURL(file);
-        console.log("abc");
-        const id = file.name.slice(0, file.name.lastIndexOf("."));
-        result.push({ id, url });
+        console.log(file.name);
+        result.push({ id:file.name, url:url });
     }));
     })
     .catch((error) => {
@@ -104,7 +103,6 @@ export async function handleReadAllFiles(folder:string) : Promise<ImgDownData[]>
     console.log("done!");
     return result
 }
-
 export async function handleGetFileURL(path:string, name:string) : Promise<string>
 {
     console.log(`try to get ${path}/${name}`)
