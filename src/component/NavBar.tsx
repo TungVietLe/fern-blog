@@ -8,16 +8,12 @@ import { handleSignInWithPopup, handleSignOut } from '../firebase/handler';
 import {user} from "../firebase/signal"
 import { computed } from '@preact/signals-react';
 
-const signOutBtn = computed(()=>user.value && <Button type='dashed' onClick={handleSignOut}>Out</Button>)
+const signOutBtn = computed(()=>user.value && <Button type='dashed' onClick={handleSignOut}>Sign Out</Button>)
 
 const items: MenuProps['items'] = [
   {
     label: (signOutBtn),
     key: 'out',
-  },
-  {
-    label: (<Button type='default' onClick={handleSignInWithPopup}>Auth</Button>),
-    key: 'auth',
   },
   {
     label: (<Link to={"/admin"}>Admin</Link>),

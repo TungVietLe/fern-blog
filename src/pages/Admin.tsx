@@ -10,6 +10,7 @@ import ImgPreview from '../component/ImgPreview';
 import { Link } from 'react-router-dom';
 import Alert, { alert } from '../component/Alert';
 import {user} from "../firebase/signal"
+import Login from "./Login"
 
 // signals
 export const blogData = signal<BlogData>(defaulBlogData as BlogData);
@@ -32,6 +33,9 @@ const AdminPage: FC = () => {
 		
 		{computed(()=>
 			{
+				if (user.value == null) {
+					return <Login/>
+				}
 				if (user.value?.email == "tunle0801@gmail.com") {
 					return (<>
 					<Alert />
@@ -53,7 +57,7 @@ const AdminPage: FC = () => {
 						<ImgPreview data={imageList} />
 					</>)
 				}
-				return <div>NOT ADMIN</div>
+				return <div>YOU DON'T HAVE THE PERMISSION TO THIS PAGE</div>
 			}
 		)
 		}

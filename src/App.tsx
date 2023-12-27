@@ -7,6 +7,7 @@ import Preview from "./pages/Preview"
 import Blogs from './pages/Blogs';
 import NotFound from "./pages/404"
 import Blog from './pages/Blog';
+import Footer from './component/Footer'
 
 function App() {
 	return (
@@ -22,6 +23,7 @@ function App() {
 					</Route>
 				</Routes>
 			</BrowserRouter>
+			<Footer/>
 		</ConfigProvider>
 	);
 }
