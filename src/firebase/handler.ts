@@ -2,7 +2,7 @@ import { collection, getDocs, doc, setDoc, getDoc } from "firebase/firestore";
 import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
 
 import { db, storage } from './config';
-import { BlogData } from '../types/BlogData';
+import { BlogData, ImgDownData } from '../types/BlogData';
 import { async } from "@firebase/util";
 
 export async function handleAddData(data:BlogData, id:string, folder:string) : Promise<void>
@@ -43,37 +43,38 @@ export function handleUploadFile(file:File, path:string) {
     });
 }
 
-export function handleReadAllFiles() {
-    const storageRef = ref(storage, "/images/afvawv");
-    listAll(storageRef)
-    .then((res) => {
-        const files = res.items;
-        
-        files.forEach((file) => {
-            console.log(file)
-        getDownloadURL(file)
-            .then((url:string) => {
-                    console.log(url)
-            })
-            .catch((error:string) => {
-            // Handle errors
-            });
-        });
+export async function handleReadAllFiles(folder:string) : Promise<ImgDownData[]>
+{
+    const result:ImgDownData[] = []
+    const storageRef = ref(storage, `${folder}`);
+    await listAll(storageRef)
+    .then(async(res) => {
+    const files = res.items;
+
+    await Promise.all(files.map(async (file) => {
+        const url = await getDownloadURL(file);
+        console.log("abc");
+        const id = file.name.slice(0, file.name.lastIndexOf("."));
+        result.push({ id, url });
+    }));
     })
     .catch((error) => {
-        // Handle errors
+    // Handle errors
     });
-    
+console.log("done!");
+    return result
 }
 
-export function handleGetFileURL(path:string, name:string) : string
+export async function handleGetFileURL(path:string, name:string) : Promise<string>
 {
+    console.log(`try to get ${path}/${name}`)
     const storageRef = ref(storage, `${path}`);
-    listAll(storageRef)
+    await listAll(storageRef)
     .then((res) => {
         const files = res.items;
         const target = files.find((elem)=>{return elem.name.slice(0, elem.name.lastIndexOf(".")) == name}) // ignore suffix, .png, .jpg...
         getDownloadURL(target!).then((url)=>{
+            console.log(`result:`)
             return url
         })
     })
