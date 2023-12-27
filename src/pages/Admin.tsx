@@ -9,6 +9,7 @@ import ImgInput from '../component/ImgInput';
 import ImgPreview from '../component/ImgPreview';
 import { Link } from 'react-router-dom';
 import Alert, { alert } from '../component/Alert';
+import {user} from "../firebase/signal"
 
 // signals
 export const blogData = signal<BlogData>(defaulBlogData as BlogData);
@@ -28,25 +29,36 @@ const AdminPage: FC = () => {
 
 	return (
 		<>
-			<Alert />
-			<div style={{ margin: '30px' }}></div>
-			<Button type="primary" onClick={handleSubmit}>
-				Submit To DB
-			</Button>
-			<Link to={'preview'}>
-				<Button type="default">Preview</Button>
-			</Link>
-			<div style={{ margin: '30px' }}></div>
-
-			<h2>Thumbnail</h2>
-			<ImgInput destination={thumbnailFile} />
-			<ImgPreview data={thumbnailFile} />
-			<TextInput data={blogData} />
-			<h2>Media</h2>
-			<ImgInput destination={imageList} customFileName />
-			<ImgPreview data={imageList} />
+		
+		{computed(()=>
+			{
+				if (user.value?.email == "tunle0801@gmail.com") {
+					return (<>
+					<Alert />
+						<div style={{ margin: '30px' }}></div>
+						<Button type="primary" onClick={handleSubmit}>
+							Submit To DB
+						</Button>
+						<Link to={'preview'}>
+							<Button type="default">Preview</Button>
+						</Link>
+						<div style={{ margin: '30px' }}></div>
+			
+						<h2>Thumbnail</h2>
+						<ImgInput destination={thumbnailFile} />
+						<ImgPreview data={thumbnailFile} />
+						<TextInput data={blogData} />
+						<h2>Media</h2>
+						<ImgInput destination={imageList} customFileName />
+						<ImgPreview data={imageList} />
+					</>)
+				}
+				return <div>NOT ADMIN</div>
+			}
+		)
+		}
+			
 		</>
 	);
 };
-
 export default AdminPage;

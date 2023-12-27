@@ -1,9 +1,49 @@
 import { collection, getDocs, doc, setDoc, getDoc } from "firebase/firestore";
 import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
 
-import { db, storage } from './config';
+import { db, storage, googleProvider } from './config';
 import { BlogData, ImgDownData } from '../types/BlogData';
-import { async } from "@firebase/util";
+
+import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
+import {user} from "./signal"
+
+export async function handleSignInWithPopup() {
+    const auth = getAuth();
+    signInWithPopup(auth, googleProvider)
+    .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential?.accessToken;
+        user.value = result.user;
+    }).catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+    });
+}
+
+export async function handleSignOut() {
+    const auth = getAuth();
+    signOut(auth).then(() => {
+        console.log("signed out")
+        user.value = null
+    }).catch((error) => {
+        console.log("sign out error occured")
+    });
+}
+
+
+
+
+
+
+
+
+
 
 export async function handleAddData(data:BlogData, id:string, folder:string) : Promise<void>
 {
