@@ -1,6 +1,8 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { useParams } from 'react-router-dom';
 import parse from "html-react-parser"
+import { handleGetDoc } from '../firebase/handler';
+import { BlogData } from '../types/BlogData';
 
 
 const Blog:React.FC = () => {
@@ -8,16 +10,22 @@ const Blog:React.FC = () => {
   const test:string = `
   {{image1}} {{image99}} 
   `
-  const renderedContent = test.replace(/{{image(\d+)}}/g, (match, index) => {
+  
+  const [data, setData] = useState<BlogData>()
+  
+  useEffect(()=>{
+    handleGetDoc("blogs", blogURL as string).then((result)=>{
+      setData(result as BlogData)
+    })
+  }, [])
+  
+  const renderedContent = data?.content.replace(/{{image(\d+)}}/g, (match, index) => {
     return `<pre> ${index} </pre>`;
   });
-  
 
     return(
     <>
-      <div>{renderedContent}</div>
-      <h1>{blogURL}</h1>
-      <div>{parse(renderedContent)}</div>
+      {renderedContent && <div>{parse(renderedContent)}</div>}
     </>
   )
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import { Alert, Button, Space } from 'antd';
 import { Signal, signal, computed } from '@preact/signals-core';
 
-export const alert = signal<"success"|"info"|"error"|"warning"|null>("success")
+export const alert = signal<"success"|"info"|"error"|"warning"|null>(null)
 const component = computed(()=>{
     if (alert.value != null) {
         return(

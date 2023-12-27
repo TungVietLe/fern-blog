@@ -1,8 +1,9 @@
-import { collection, getDocs, doc, setDoc } from "firebase/firestore";
+import { collection, getDocs, doc, setDoc, getDoc } from "firebase/firestore";
 import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
 
 import { db, storage } from './config';
 import { BlogData } from '../types/BlogData';
+import { async } from "@firebase/util";
 
 export async function handleAddData(data:BlogData, id:string, folder:string) : Promise<void>
 {
@@ -23,6 +24,17 @@ export async function handleGetAllDataInCollection(collectionName: string) : Pro
     });
     return(r)
 }
+export async function handleGetDoc(folder:string, id:string) {
+    const docRef = doc(db, `${folder}`, `${id}`);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        return docSnap.data() 
+    } else {
+        return null
+    }
+}
+handleGetDoc("blogs", "first custom id")
 
 export function handleUploadFile(file:File, path:string) {
     const storageRef = ref(storage, path);
