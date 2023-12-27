@@ -2,7 +2,13 @@ export type BlogData = {
 	title:string,
 	content:string, 
 	description:string,
-	date:string
+	date:string,
+	tag: string,
+	thumbnailURL: string
+}
+export const defaulBlogData = {
+	title: "",
+	content: ""
 }
 
 export type ImgUpData = { //upload

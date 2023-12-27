@@ -3,42 +3,50 @@ import { FC } from 'react';
 import { Button } from 'antd';
 import TextInput from '../component/TextInput';
 import { signal, computed, } from '@preact/signals-react';
-import { BlogData, ImgUpData } from '../types/BlogData';
+import { BlogData, ImgUpData, defaulBlogData } from '../types/BlogData';
 import { handleAddData, handleUploadFile } from '../firebase/handler';
-import ImgInput from "../component/ImgInput"
+import ImgInput from '../component/ImgInput';
 import ImgPreview from '../component/ImgPreview';
 import { Link } from 'react-router-dom';
-import Alert, {alert} from "../component/Alert"
+import Alert, { alert } from '../component/Alert';
 
 // signals
-const blogData = signal<BlogData>({title: "", content:"", description:"", date:""})
-const imageList = signal<ImgUpData[]>([])
+export const blogData = signal<BlogData>(defaulBlogData as BlogData);
+export const imageList = signal<ImgUpData[]>([]);
+const thumbnailFile = signal<ImgUpData[]>([]); // actually only store 1 file
 // end signals
 
-
-
-const AdminPage:FC = ()=> {
-	const handleSubmit = () => {
-    	handleAddData(blogData.value, blogData.value.title, "blogs")
-		.then(()=>alert.value = "success")
-		imageList.value.map((elem)=>{
-			handleUploadFile(elem.file, `images/${blogData.value.title}/${elem.id}.png`)
-		})
-  	}
+const AdminPage: FC = () => {
+	const handleSubmit = async () => {
+		imageList.value.map((elem) => {
+			handleUploadFile(elem.file, `images/${blogData.value.title}/${elem.id}.png`);
+		});
+		const thumbnailURL = await handleUploadFile(thumbnailFile.value[0].file, `images/${blogData.value.title}/thumbnail.png`);
+		blogData.value = { ...blogData.value, thumbnailURL: thumbnailURL };
+		handleAddData(blogData.value, blogData.value.title, 'blogs').then(() => (alert.value = 'success'));
+	};
 
 	return (
 		<>
-			<Alert/>
-			<div style={{margin:"30px"}}></div>
-			<Button type='primary' onClick={handleSubmit}>Submit To DB</Button>
-			<Link to={"preview"}><Button type='default'>Preview</Button></Link>
-			<div style={{margin:"30px"}}></div>
-			<TextInput data={blogData}/>
-			<ImgInput destination={imageList}/>
-    		<ImgPreview data={imageList}/>
+			<Alert />
+			<div style={{ margin: '30px' }}></div>
+			<Button type="primary" onClick={handleSubmit}>
+				Submit To DB
+			</Button>
+			<Link to={'preview'}>
+				<Button type="default">Preview</Button>
+			</Link>
+			<div style={{ margin: '30px' }}></div>
+
+			<h2>Thumbnail</h2>
+			<ImgInput destination={thumbnailFile} />
+			<ImgPreview data={thumbnailFile} />
+			<TextInput data={blogData} />
+			<h2>Media</h2>
+			<ImgInput destination={imageList} customFileName />
+			<ImgPreview data={imageList} />
 		</>
 	);
-}
+};
 
-export {blogData, imageList}
 export default AdminPage;

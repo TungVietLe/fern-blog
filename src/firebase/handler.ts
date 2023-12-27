@@ -29,18 +29,18 @@ export async function handleGetDoc(folder:string, id:string) {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-        return docSnap.data() 
+        return Promise.resolve(docSnap.data()) 
     } else {
-        return null
+        return Promise.reject(null) 
     }
 }
-handleGetDoc("blogs", "first custom id")
 
-export function handleUploadFile(file:File, path:string) {
+export async function  handleUploadFile(file:File, path:string) : Promise<string> {
+    let downloadURL = ""
     const storageRef = ref(storage, path);
-    uploadBytes(storageRef, file).then((url) => {
-        console.log('Uploaded a blob or file!');
-    });
+    const snapshot = await uploadBytes(storageRef, file)
+    const url = await getDownloadURL(snapshot.ref)
+    return url
 }
 
 export async function handleReadAllFiles(folder:string) : Promise<ImgDownData[]>
@@ -61,7 +61,7 @@ export async function handleReadAllFiles(folder:string) : Promise<ImgDownData[]>
     .catch((error) => {
     // Handle errors
     });
-console.log("done!");
+    console.log("done!");
     return result
 }
 
