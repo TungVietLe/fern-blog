@@ -1,8 +1,8 @@
 export type BlogData = {
 	title:string,
 	content:string, 
-	id?:string,
-	date?:string
+	description:string,
+	date:string
 }
 
 export type ImgUpData = { //upload

@@ -23,6 +23,20 @@ const TextInput: React.FC<TextInputProps> = ({data}) => {
               />
               <div style={{ margin: '24px 0' }} />
               <TextArea
+                value={data.value.description}
+                onChange={(e) => data.value = {...data.value, description: (e.target.value)}}
+                placeholder="Description"
+                autoSize
+              />
+              <div style={{ margin: '24px 0' }} />
+              <TextArea
+                value={data.value.date}
+                onChange={(e) => data.value = {...data.value, date: (e.target.value)}}
+                placeholder="Date"
+                autoSize
+              />
+              <div style={{ margin: '24px 0' }} />
+              <TextArea
                 value={data.value.content}
                 onChange={(e) => data.value = {...data.value, content: (e.target.value)}}
                 placeholder="Content"

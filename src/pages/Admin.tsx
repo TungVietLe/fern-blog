@@ -7,23 +7,12 @@ import { BlogData, ImgUpData } from '../types/BlogData';
 import { handleAddData, handleUploadFile } from '../firebase/handler';
 import ImgInput from "../component/ImgInput"
 import ImgPreview from '../component/ImgPreview';
-import parse from "html-react-parser"
+import { Link } from 'react-router-dom';
 import Alert, {alert} from "../component/Alert"
 
 // signals
-const blogData = signal<BlogData>({title: "", content:""})
+const blogData = signal<BlogData>({title: "", content:"", description:"", date:""})
 const imageList = signal<ImgUpData[]>([])
-const previewContent = computed(()=>{
-	// basically just change image string to tag
-	const replaced = blogData.value.content.replace(/{{image(\d+)}}/g, (match, id) => {
-		const target = imageList.value.find((element) => element.id == id)
-		if (target?.file) {
-		return `<img src=${URL.createObjectURL(target?.file)} />`;
-		} 
-		else return ""
-	});
-	return parse(replaced)
-}) 
 // end signals
 
 
@@ -37,18 +26,19 @@ const AdminPage:FC = ()=> {
 		})
   	}
 
-	//replace img string with HTML tag
 	return (
 		<>
 			<Alert/>
+			<div style={{margin:"30px"}}></div>
 			<Button type='primary' onClick={handleSubmit}>Submit To DB</Button>
+			<Link to={"preview"}><Button type='default'>Preview</Button></Link>
+			<div style={{margin:"30px"}}></div>
 			<TextInput data={blogData}/>
 			<ImgInput destination={imageList}/>
     		<ImgPreview data={imageList}/>
-			{/* preview  */}
-			<div>{previewContent}</div>
 		</>
 	);
 }
 
+export {blogData, imageList}
 export default AdminPage;

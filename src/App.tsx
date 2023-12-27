@@ -2,7 +2,8 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom"; 
 import { ConfigProvider, theme } from 'antd';
 import NavBar from './component/NavBar';
-import AddBlogPage from './pages/Admin';
+import Admin from './pages/Admin';
+import Preview from "./pages/Preview"
 import Blogs from './pages/Blogs';
 import NotFound from "./pages/404"
 import Blog from './pages/Blog';
@@ -15,7 +16,8 @@ function App() {
 					<Route path="/" element={<NavBar />}>
 					{/* <Route index element={<Blogs />} /> */}
 					<Route path="/blogs/*" element={<BlogRoutes />} />
-					<Route path="/admin" element={<AddBlogPage />} />
+					<Route path="/admin/preview" element={<Preview />} />
+					<Route path="/admin" element={<Admin />} />
 					<Route path="*" element={<NotFound />} />
 					</Route>
 				</Routes>
@@ -33,13 +35,4 @@ const BlogRoutes:React.FC = () => {
 		</Routes>
 	)
 }
-
-//Background div style
-const backgroundDiv: React.CSSProperties = {
-  color:"white", 
-  backgroundColor:"black", 
-  top:0,bottom:0,left:0,right:0, 
-  zIndex:-100
-};
-
 export default App;

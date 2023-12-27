@@ -5,13 +5,13 @@ import { handleGetDoc, handleGetFileURL, handleReadAllFiles } from '../firebase/
 import { BlogData, ImgDownData } from '../types/BlogData';
 import {signal, computed, batch} from "@preact/signals-react"
 
-const data = signal<BlogData>({title:"", content:""})
+const fetchedData = signal<BlogData>({title:"", content:"",description:"", date:""})
 const fetchedImgs = signal<ImgDownData[]>([])
 
 const previewContent = computed(()=>{
-  const path = `images/${data.value.title}`
+  const path = `images/${fetchedData.value.title}`
   
-  const replaced = data.value.content.replace(/{{image(\d+)}}/g, (match, id) => {
+  const replaced = fetchedData.value.content.replace(/{{image(\d+)}}/g, (match, id) => {
     const url = fetchedImgs.value.find((elem) => elem.id == id)?.url
     return `<img src="${url}" />`;
   });
@@ -24,7 +24,7 @@ const Blog:React.FC = () => {
   
   useEffect(()=>{
     handleGetDoc("blogs", blogURL as string).then((result)=>{
-      data.value = (result as BlogData)
+      fetchedData.value = (result as BlogData)
     })
     handleReadAllFiles(`images/${blogURL}`).then((result)=>{
       fetchedImgs.value = result
@@ -34,6 +34,7 @@ const Blog:React.FC = () => {
 
     return(
     <>
+      <h1>{blogURL}</h1>
       {previewContent}
     </>
   )
