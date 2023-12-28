@@ -2,7 +2,7 @@ import { collection, getDocs, doc, setDoc, getDoc, orderBy, query } from "fireba
 import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
 
 import { db, storage, googleProvider } from './config';
-import { BlogData, ImgDownData } from '../types/BlogData';
+import { BlogData, ImgData } from '../types/BlogData';
 
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
 import {user} from "./signal"
@@ -83,9 +83,9 @@ export async function  handleUploadFile(file:File, path:string) : Promise<string
     return url
 }
 
-export async function handleReadAllFiles(folder:string) : Promise<ImgDownData[]>
+export async function handleReadAllFiles(folder:string) : Promise<ImgData[]>
 {
-    const result:ImgDownData[] = []
+    const result:ImgData[] = []
     const storageRef = ref(storage, `${folder}`);
     await listAll(storageRef)
     .then(async(res) => {

@@ -1,25 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import parse from 'html-react-parser';
 import { handleGetDoc, handleGetFileURL, handleReadAllFiles } from '../firebase/handler';
-import { BlogData, ImgDownData, defaulBlogData } from '../types/BlogData';
+import { BlogData, defaulBlogData, ImgData } from '../types/BlogData';
 import { signal, computed, batch } from '@preact/signals-react';
 import { Button, Empty, FloatButton } from 'antd';
+import { DecodeThenParseToHTML } from '../utils';
 
 const fetchedData = signal<BlogData>(defaulBlogData as BlogData);
-const fetchedImgs = signal<ImgDownData[]>([]);
+const fetchedImgs = signal<ImgData[]>([]);
 
 const previewContent = computed(() => {
-	const path = `images/${fetchedData.value.title}`;
-
-	const replaced =
-		'<pre>' +
-		fetchedData.value.content.replace(/{{image(\d+)}}/g, (match, id) => {
-			const url = fetchedImgs.value.find((elem) => elem.id == id)?.url;
-			return `<img src="${url}" />`;
-		}) +
-		'</pre>';
-	return parse(replaced);
+	return DecodeThenParseToHTML(fetchedData.value.content, fetchedImgs.value);
 });
 
 const blogExist = signal<boolean>(false);

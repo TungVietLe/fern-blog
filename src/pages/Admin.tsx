@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { Button } from 'antd';
 import TextInput from '../component/TextInput';
 import { signal, computed, } from '@preact/signals-react';
-import { BlogData, ImgUpData, defaulBlogData } from '../types/BlogData';
+import { BlogData, ImgData, defaulBlogData } from '../types/BlogData';
 import { handleAddData, handleUploadFile, handleGetDoc } from '../firebase/handler';
 import ImgInput from '../component/ImgInput';
 import ImgPreview from '../component/ImgPreview';
@@ -15,8 +15,8 @@ import { notification } from 'antd';
 
 // signals
 export const blogData = signal<BlogData>(defaulBlogData as BlogData);
-export const imageList = signal<ImgUpData[]>([]);
-const thumbnailFile = signal<ImgUpData[]>([]); // only take the first file as thumbnail
+export const imageList = signal<ImgData[]>([]);
+const thumbnailFile = signal<ImgData[]>([]); // only take the first file as thumbnail
 // end signals
 
 const AdminPage: FC = () => {
@@ -59,10 +59,13 @@ const AdminPage: FC = () => {
 };
 const handleSubmit = async () => {
 	imageList.value.map((elem) => {
-		handleUploadFile(elem.file, `images/${blogData.value.title}/${elem.id}`);
+		//if file exist
+		elem.file && handleUploadFile(elem.file, `images/${blogData.value.title}/${elem.id}`);
 	});
-	const thumbnailURL = await handleUploadFile(thumbnailFile.value[0].file, `images/${blogData.value.title}/thumbnail`);
-	blogData.value = { ...blogData.value, thumbnailURL: thumbnailURL };
+	if (thumbnailFile.value[0].file) {
+		const thumbnailURL = await handleUploadFile(thumbnailFile.value[0].file, `images/${blogData.value.title}/thumbnail`);
+		blogData.value = { ...blogData.value, thumbnailURL: thumbnailURL };
+	}
 	handleAddData(blogData.value, blogData.value.title, 'blogs').then(() => notification.success({ message: 'success' }));
 };
 const handlePull = () => {

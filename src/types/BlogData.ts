@@ -13,12 +13,8 @@ export const defaulBlogData = {
 	content: "",
 }
 
-export type ImgUpData = { //upload
+export type ImgData = { //upload
 	id: string,
-	file: File,
-}
-
-export type ImgDownData = { //retrive from db
-	id: string,
-	url: string,
+	file?: File,
+	url: string
 }

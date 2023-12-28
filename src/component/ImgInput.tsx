@@ -1,11 +1,11 @@
 import React from 'react';
 import {Input} from "antd";
 import {Signal, signal, useSignal, computed} from "@preact/signals-react"
-import { ImgUpData } from '../types/BlogData';
-const {TextArea} = Input
+import { ImgData } from '../types/BlogData';
+const { TextArea } = Input;
 
 type ImgInputProps = {
-	destination: Signal<ImgUpData[]>;
+	destination: Signal<ImgData[]>;
 	customFileName?: boolean;
 };
 const ImgInput: React.FC<ImgInputProps> = ({ destination, customFileName = false }) => {
@@ -17,7 +17,7 @@ const ImgInput: React.FC<ImgInputProps> = ({ destination, customFileName = false
 				onChange={(e) => {
 					if (e.target.files && e.target.files[0]) {
 						const newFile = e.target.files[0];
-						const newImgData = { id: newFile.name, file: newFile };
+						const newImgData = { id: newFile.name, file: newFile, url: URL.createObjectURL(newFile) };
 						destination.value = [...destination.value, newImgData];
 						desireId.value = newFile.name;
 						console.log(destination.value);
