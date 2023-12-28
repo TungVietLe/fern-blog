@@ -1,26 +1,30 @@
 import React from 'react';
-import { Alert, Button, Space } from 'antd';
-import { Signal, signal, computed } from '@preact/signals-core';
+import { notification } from 'antd';
+import { signal, computed } from '@preact/signals-core';
 
-export const alert = signal<"success"|"info"|"error"|"warning"|null>(null)
-const component = computed(()=>{
-    if (alert.value != null) {
-        return(
-        <>
-            {
-                <Space direction="horizontal" style={{ width: '100%' , display:"flex"}}>
-                    <Alert message={alert} type={alert.value!} />
-                    <Button danger type="dashed" onClick={()=>alert.value=null}>x</Button>
-                </Space>
-            }
-        </>
-        )
-    }
-    else return <></>
-})
+type AlertType = 'success' | 'info' | 'error' | 'warning' | null;
+export const alert = signal<AlertType>('info');
 
-const App: React.FC = () => {
-    return<>{component}</>
-}
+export const AlertComponent: React.FC = () => {
+	const [api, contextHolder] = notification.useNotification();
 
-export default App;
+	const openNotificationWithIcon = (type: AlertType) => {
+		if (type == null) return;
+		api[type]({
+			message: 'Success',
+			description: 'Well done!.',
+			onClose: () => {
+				alert.value = null;
+			},
+		});
+	};
+
+	return (
+		<>
+			{computed(() => {
+				openNotificationWithIcon(alert.value);
+				return <>{contextHolder}</>;
+			})}
+		</>
+	);
+};

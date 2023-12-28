@@ -9,10 +9,15 @@ img {
 }
 
 pre {
-    background-color: rgb(36, 36, 36);
+    text-wrap: wrap;
+    }
+    
+    pre.code {
+background-color: rgb(36, 36, 36);
     padding: 30px;
     border-radius: 12px;
 }
+    
 a {
     color: rgb(226, 226, 226);
     text-underline-offset: 3px;

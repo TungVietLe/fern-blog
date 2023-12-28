@@ -5,12 +5,12 @@ import TextInput from '../component/TextInput';
 import { signal, computed, } from '@preact/signals-react';
 import { BlogData, ImgUpData, defaulBlogData } from '../types/BlogData';
 import { handleAddData, handleUploadFile } from '../firebase/handler';
+import { alert } from '../component/Alert';
 import ImgInput from '../component/ImgInput';
 import ImgPreview from '../component/ImgPreview';
 import { Link } from 'react-router-dom';
-import Alert, { alert } from '../component/Alert';
-import {user} from "../firebase/signal"
-import Login from "./Login"
+import { user } from '../firebase/signal';
+import Login from './Login';
 
 // signals
 export const blogData = signal<BlogData>(defaulBlogData as BlogData);
@@ -30,38 +30,34 @@ const AdminPage: FC = () => {
 
 	return (
 		<>
-		
-		{computed(()=>
-			{
+			{computed(() => {
 				if (user.value == null) {
-					return <Login/>
+					return <Login />;
 				}
-				if (user.value?.email == "tunle0801@gmail.com") {
-					return (<>
-					<Alert />
-						<div style={{ margin: '30px' }}></div>
-						<Button type="primary" onClick={handleSubmit}>
-							Submit To DB
-						</Button>
-						<Link to={'preview'}>
-							<Button type="default">Preview</Button>
-						</Link>
-						<div style={{ margin: '30px' }}></div>
-			
-						<h2>Thumbnail</h2>
-						<ImgInput destination={thumbnailFile} />
-						<ImgPreview data={thumbnailFile} />
-						<TextInput data={blogData} />
-						<h2>Media</h2>
-						<ImgInput destination={imageList} customFileName />
-						<ImgPreview data={imageList} />
-					</>)
+				if (user.value?.email == 'tunle0801@gmail.com') {
+					return (
+						<>
+							<div style={{ margin: '30px' }}></div>
+							<Button type="primary" onClick={handleSubmit}>
+								Submit To DB
+							</Button>
+							<Link to={'preview'}>
+								<Button type="default">Preview</Button>
+							</Link>
+							<div style={{ margin: '30px' }}></div>
+
+							<h2>Thumbnail</h2>
+							<ImgInput destination={thumbnailFile} />
+							<ImgPreview data={thumbnailFile} />
+							<TextInput data={blogData} />
+							<h2>Media</h2>
+							<ImgInput destination={imageList} customFileName />
+							<ImgPreview data={imageList} />
+						</>
+					);
 				}
-				return <div>YOU DON'T HAVE THE PERMISSION TO THIS PAGE</div>
-			}
-		)
-		}
-			
+				return <div>YOU DON'T HAVE THE PERMISSION TO THIS PAGE</div>;
+			})}
 		</>
 	);
 };

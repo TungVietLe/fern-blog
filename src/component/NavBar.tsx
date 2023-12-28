@@ -11,25 +11,24 @@ import { computed } from '@preact/signals-react';
 const signOutBtn = computed(()=>user.value && <Button type='dashed' onClick={handleSignOut}>Sign Out</Button>)
 
 const items: MenuProps['items'] = [
-  {
-    label: (signOutBtn),
-    key: 'out',
-  },
-  {
-    label: (<Link to={"/admin"}>Admin</Link>),
-    key: 'mail',
-    icon: <MailOutlined />,
-  },
-  {
-    label: (<Link to={"/blogs"}>Blogs</Link>),
-    icon: <AppstoreOutlined />,
+	{
+		label: signOutBtn,
+		key: 'out',
+	},
+	{
+		label: <Link to={'/blogs'}>Blogs</Link>,
+		icon: <AppstoreOutlined />,
 
-    key: 'alipay',
-  },
-  {
-    label: (<a href={"https://tungle.tech"} target='_blank'>Me</a>),
-    key: 'me',
-  },
+		key: 'alipay',
+	},
+	{
+		label: (
+			<a href={'https://tungle.tech'} target="_blank">
+				Me
+			</a>
+		),
+		key: 'me',
+	},
 ];
 
 const NavBar: React.FC = () => {

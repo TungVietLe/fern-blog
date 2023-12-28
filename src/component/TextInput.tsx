@@ -17,7 +17,7 @@ const TextInput: React.FC<TextInputProps> = ({data}) => {
 				<>
 					<TextArea
 						value={data.value.title}
-						onChange={(e) => (data.value = { ...data.value, title: e.target.value })}
+						onChange={(e) => (data.value = { ...data.value, title: e.target.value.replace(/[^a-zA-Z0-9 ]/g, '') })} //no special character
 						placeholder="Title"
 						autoSize
 					/>

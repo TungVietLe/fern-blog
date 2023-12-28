@@ -3,19 +3,24 @@ import { Avatar, List, Tag } from 'antd';
 import { handleGetAllDataInCollection } from '../firebase/handler';
 import { BlogData } from '../types/BlogData';
 import { Link } from 'react-router-dom';
+import { signal, computed } from '@preact/signals-react';
 
-const Blog:React.FC = () => {
-    // retrieve data
-    const [data, setData] = useState<BlogData[]>()
-    const effect = useEffect(()=>{
-        handleGetAllDataInCollection("blogs")
-        .then(response => setData(response))
-    }, [])
+const pulledBlogsData = signal<BlogData[]>([]);
+const Blog: React.FC = () => {
+	const effect = useEffect(() => {
+		if (pulledBlogsData.value.length != 0) return;
+		handleGetAllDataInCollection('blogs').then((response) => (pulledBlogsData.value = response));
+		console.log('TRY TO GET BLOG DATA');
+	}, []);
 
-    return (
+	return body;
+};
+
+const body = computed(() => {
+	return (
 		<List
 			itemLayout="horizontal"
-			dataSource={data}
+			dataSource={pulledBlogsData.value}
 			renderItem={(item, index) => (
 				<List.Item>
 					<List.Item.Meta
@@ -42,6 +47,6 @@ const Blog:React.FC = () => {
 			)}
 		/>
 	);
-};
+});
 
 export default Blog;

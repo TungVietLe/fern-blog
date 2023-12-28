@@ -1,10 +1,17 @@
 import React from 'react';
-import { SmileOutlined } from '@ant-design/icons';
-import { Button, Result } from 'antd';
+import { Link } from 'react-router-dom';
 import { Layout } from 'antd';
-const { Header, Content, Footer, Sider } = Layout;
+import { SettingOutlined } from '@ant-design/icons';
+const { Footer } = Layout;
 const Login: React.FC = () => (
-    <Footer style={{ textAlign: 'center' }}>Ant Design ©2023 Created by Tung Le</Footer>
+	<>
+		<Footer style={{ textAlign: 'center' }}>
+			©2023 Created by Tung Le
+			<Link to={'/admin'}>
+				<SettingOutlined color="white" />
+			</Link>
+		</Footer>
+	</>
 );
 
 export default Login;

@@ -35,9 +35,9 @@ const ImgInput: React.FC<ImgInputProps> = ({ destination, customFileName = false
 								<TextArea
 									value={desireId.value}
 									onChange={(e) => {
-										desireId.value = e.target.value;
+										desireId.value = e.target.value.replace(/\D/g, ''); //only take digit
 										const temp = [...destination.value];
-										temp[temp.length - 1].id = desireId.value;
+										temp[temp.length - 1].id = desireId.value; // change id of the element in the end of array
 										destination.value = temp;
 									}}
 									placeholder="Image ID (number only)"

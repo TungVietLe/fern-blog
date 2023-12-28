@@ -4,7 +4,7 @@ import parse from 'html-react-parser';
 import { handleGetDoc, handleGetFileURL, handleReadAllFiles } from '../firebase/handler';
 import { BlogData, ImgDownData, defaulBlogData } from '../types/BlogData';
 import { signal, computed, batch } from '@preact/signals-react';
-import { Empty } from 'antd';
+import { Button, Empty } from 'antd';
 
 const fetchedData = signal<BlogData>(defaulBlogData as BlogData);
 const fetchedImgs = signal<ImgDownData[]>([]);
@@ -20,18 +20,6 @@ const previewContent = computed(() => {
 });
 
 const blogExist = signal<boolean>(false);
-const body = computed(() => {
-	if (!blogExist.value) {
-		return <Empty description={false} />;
-	} else {
-		return (
-			<>
-				<h1>{fetchedData.value.title}</h1>
-				{previewContent}
-			</>
-		);
-	}
-});
 const Blog: React.FC = () => {
 	const { blogURL } = useParams();
 
@@ -47,11 +35,24 @@ const Blog: React.FC = () => {
 			});
 		handleReadAllFiles(`images/${blogURL}`).then((result) => {
 			fetchedImgs.value = result;
-			console.log(result)
+			console.log(result);
 		});
 	}, []);
 
 	return <>{body}</>;
 };
+
+const body = computed(() => {
+	if (!blogExist.value) {
+		return <Empty description={false}></Empty>;
+	} else {
+		return (
+			<>
+				<h1>{fetchedData.value.title}</h1>
+				{previewContent}
+			</>
+		);
+	}
+});
 
 export default Blog;
