@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom"; 
-import { ConfigProvider, theme } from 'antd';
+import { ConfigProvider } from 'antd';
 import { AlertComponent } from './component/Alert';
 import NavBar from './component/NavBar';
 import Admin from './pages/Admin';
@@ -9,15 +9,9 @@ import Blogs from './pages/Blogs';
 import NotFound from './pages/404';
 import Blog from './pages/Blog';
 import Footer from './component/Footer';
+import { customTheme } from './styles/theme';
 
-const customTheme = {
-	token: {
-		colorPrimary: '#fa8c16',
-		colorInfo: '#fa8c16',
-		colorBgBase: '#f5f5f5',
-	},
-	algorithm: theme.defaultAlgorithm,
-};
+
 
 function App() {
 	return (
