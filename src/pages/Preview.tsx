@@ -8,13 +8,15 @@ import { Button } from 'antd';
 
 const previewContent = computed(()=>{
 	// basically just change image string to tag
-	const replaced = blogData.value.content.replace(/{{image(\d+)}}/g, (match, id) => {
-		const target = imageList.value.find((element) => element.id == id)
-		if (target?.file) {
-		return `<img src="${URL.createObjectURL(target?.file)}"/>`;
-		} 
-		else return ""
-	});
+	const replaced =
+		'<pre>' +
+		blogData.value.content.replace(/{{image(\d+)}}/g, (match, id) => {
+			const target = imageList.value.find((element) => element.id == id);
+			if (target?.file) {
+				return `<img src="${URL.createObjectURL(target?.file)}"/>`;
+			} else return '';
+		}) +
+		'</pre>';
 	return parse(replaced)
 }) 
 

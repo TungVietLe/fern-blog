@@ -12,10 +12,13 @@ const fetchedImgs = signal<ImgDownData[]>([]);
 const previewContent = computed(() => {
 	const path = `images/${fetchedData.value.title}`;
 
-	const replaced = fetchedData.value.content.replace(/{{image(\d+)}}/g, (match, id) => {
-		const url = fetchedImgs.value.find((elem) => elem.id == id)?.url;
-		return `<img src="${url}" />`;
-	});
+	const replaced =
+		'<pre>' +
+		fetchedData.value.content.replace(/{{image(\d+)}}/g, (match, id) => {
+			const url = fetchedImgs.value.find((elem) => elem.id == id)?.url;
+			return `<img src="${url}" />`;
+		}) +
+		'</pre>';
 	return parse(replaced);
 });
 
