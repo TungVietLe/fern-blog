@@ -54,6 +54,10 @@ const body = computed(() => {
 	} else {
 		return (
 			<>
+				<div style={{ margin: '60px 0' }}></div>
+				<p style={{ opacity: 0.5 }}>
+					{fetchedData.value.date.toDate().toDateString()} <mark style={{ backgroundColor: '#b8b8b8' }}>{fetchedData.value.tag}</mark>
+				</p>
 				<h1>{fetchedData.value.title}</h1>
 				{previewContent}
 			</>

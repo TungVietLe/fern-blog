@@ -1,4 +1,4 @@
-import { collection, getDocs, doc, setDoc, getDoc } from "firebase/firestore";
+import { collection, getDocs, doc, setDoc, getDoc, orderBy, query } from "firebase/firestore";
 import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
 
 import { db, storage, googleProvider } from './config';
@@ -56,7 +56,7 @@ export async function handleAddData(data:BlogData, id:string, folder:string) : P
 
 export async function handleGetAllDataInCollection(collectionName: string) : Promise<BlogData[]> {
     let r:BlogData[] = []
-    const querySnapshot = await getDocs(collection(db, collectionName));
+    const querySnapshot = await getDocs(query(collection(db, collectionName), orderBy("date", "desc"))); //order by desending dates
     querySnapshot.forEach((doc) => {
     // doc.data() is never undefined for query doc snapshots
     //console.log(doc.id, " => ", doc.data());

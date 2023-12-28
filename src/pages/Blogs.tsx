@@ -37,7 +37,7 @@ const body = computed(() => {
 							>
 								<div>
 									{item.description} <br></br>
-									{item.date} <br></br>
+									{item.date.toDate().toDateString()} <br></br>
 								</div>
 								<Tag style={{ fontWeight: '500', color: '#828282', backgroundColor: '#e0e0e0' }} bordered={false}>
 									{item.tag}

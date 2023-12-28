@@ -11,6 +11,7 @@ import ImgPreview from '../component/ImgPreview';
 import { Link } from 'react-router-dom';
 import { user } from '../firebase/signal';
 import Login from './Login';
+import DateInput from '../component/DateInput';
 
 // signals
 export const blogData = signal<BlogData>(defaulBlogData as BlogData);
@@ -49,7 +50,8 @@ const AdminPage: FC = () => {
 							<h2>Thumbnail</h2>
 							<ImgInput destination={thumbnailFile} />
 							<ImgPreview data={thumbnailFile} />
-							<TextInput data={blogData} />
+							<TextInput destination={blogData} />
+							<DateInput destination={blogData} />
 							<h2>Media</h2>
 							<ImgInput destination={imageList} customFileName />
 							<ImgPreview data={imageList} />

@@ -1,14 +1,16 @@
+import { Timestamp } from "@firebase/firestore";
+
 export type BlogData = {
 	title:string,
 	content:string, 
 	description:string,
-	date:string,
+	date:Timestamp,
 	tag: string,
 	thumbnailURL: string
 }
 export const defaulBlogData = {
 	title: "",
-	content: ""
+	content: "",
 }
 
 export type ImgUpData = { //upload
