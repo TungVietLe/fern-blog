@@ -1,31 +1,57 @@
-body {
-    background-color: black;
-    color: white;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap');
+
+:root{
+	--bg: #f5f5f5;
+	--text-primary: rgb(79, 79, 79);
+	--font: 'Inter', sans-serif;
 }
+body {
+	background-color: var(--bg);
+	color: var(--text-primary);
+	font-family: var(--font);
+	line-height: 2;
+}
+::selection {
+  color: rgb(255, 255, 255);
+  background: rgb(77, 77, 77);
+}
+
 img {
-    max-width: 100%;
-    border-radius: 16px;
+	max-width: 100%;
+	border-radius: 16px;
 }
 
 pre {
-    text-wrap: wrap;
-    }
-    
-    pre.code {
-background-color: rgb(36, 36, 36);
-    padding: 30px;
-    border-radius: 12px;
+	font-family: var(--font);
+	text-wrap: wrap;
+	font-weight: 400;
 }
-    
+
+pre.code {
+	background-color: rgb(41, 37, 36);
+	color: rgb(214, 211, 209);
+	padding: 30px;
+	border-radius: 12px;
+	font-weight: 500;
+}
+
+mark{
+	padding: 3px 6px;
+	background-color: gold;
+	border-radius: 5px;
+}
+
 a {
-    color: rgb(226, 226, 226);
-    text-underline-offset: 3px;
-    transition-duration: 0.3s;
-    padding: 2px 4px;
+	color: rgb(255, 162, 0);
+	font-weight: bold;
+	text-underline-offset: 5px;
+	text-decoration-thickness: 2px;
+	transition-duration: 0.3s;
+	padding: 2px 4px;
 }
+
 a:hover {
-    color: white;
-    text-decoration-color: transparent;
-    border-radius: 4px;
+	color: rgb(255, 162, 0);
+	text-decoration-color: transparent;
+	border-radius: 4px;
 }

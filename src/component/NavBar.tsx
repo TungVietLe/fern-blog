@@ -24,7 +24,7 @@ const items: MenuProps['items'] = [
 	{
 		label: (
 			<a href={'https://tungle.tech'} target="_blank">
-				Me
+				Me 🡥
 			</a>
 		),
 		key: 'me',

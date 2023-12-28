@@ -39,7 +39,9 @@ const body = computed(() => {
 									{item.description} <br></br>
 									{item.date} <br></br>
 								</div>
-								<Tag color={'blue'}>{item.tag}</Tag>
+								<Tag style={{ fontWeight: '500', color: '#828282', backgroundColor: '#e0e0e0' }} bordered={false}>
+									{item.tag}
+								</Tag>
 							</div>
 						}
 					/>

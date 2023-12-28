@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import parse from 'html-react-parser';
 import { handleGetDoc, handleGetFileURL, handleReadAllFiles } from '../firebase/handler';
 import { BlogData, ImgDownData, defaulBlogData } from '../types/BlogData';
 import { signal, computed, batch } from '@preact/signals-react';
-import { Button, Empty } from 'antd';
+import { Button, Empty, FloatButton } from 'antd';
 
 const fetchedData = signal<BlogData>(defaulBlogData as BlogData);
 const fetchedImgs = signal<ImgDownData[]>([]);
@@ -22,6 +22,7 @@ const previewContent = computed(() => {
 const blogExist = signal<boolean>(false);
 const Blog: React.FC = () => {
 	const { blogURL } = useParams();
+	const navigateTo = useNavigate();
 
 	useEffect(() => {
 		blogExist.value = false;
@@ -39,7 +40,12 @@ const Blog: React.FC = () => {
 		});
 	}, []);
 
-	return <>{body}</>;
+	return (
+		<>
+			<FloatButton onClick={() => navigateTo('/blogs')} description="🡠" style={{ fontWeight: 'bold', left: '3vw', top: '20vh' }}></FloatButton>
+			{body}
+		</>
+	);
 };
 
 const body = computed(() => {

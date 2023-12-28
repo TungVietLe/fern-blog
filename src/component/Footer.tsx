@@ -5,7 +5,7 @@ import { SettingOutlined } from '@ant-design/icons';
 const { Footer } = Layout;
 const Login: React.FC = () => (
 	<>
-		<Footer style={{ textAlign: 'center' }}>
+		<Footer style={{ textAlign: 'center', backgroundColor: 'transparent' }}>
 			©2023 Created by Tung Le
 			<Link to={'/admin'}>
 				<SettingOutlined color="white" />

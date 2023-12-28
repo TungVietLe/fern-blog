@@ -10,9 +10,18 @@ import NotFound from './pages/404';
 import Blog from './pages/Blog';
 import Footer from './component/Footer';
 
+const customTheme = {
+	token: {
+		colorPrimary: '#fa8c16',
+		colorInfo: '#fa8c16',
+		colorBgBase: '#f5f5f5',
+	},
+	algorithm: theme.defaultAlgorithm,
+};
+
 function App() {
 	return (
-		<ConfigProvider theme={{ algorithm: theme.darkAlgorithm }}>
+		<ConfigProvider theme={customTheme}>
 			<BrowserRouter>
 				<Routes>
 					<Route path="/" element={<NavBar />}>
