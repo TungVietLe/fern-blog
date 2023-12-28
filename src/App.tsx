@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom"; 
 import { ConfigProvider } from 'antd';
-import { AlertComponent } from './component/Alert';
+import AlertComponent from './component/Alert';
 import NavBar from './component/NavBar';
 import Admin from './pages/Admin';
 import Preview from './pages/Preview';

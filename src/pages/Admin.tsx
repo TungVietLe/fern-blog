@@ -4,31 +4,22 @@ import { Button } from 'antd';
 import TextInput from '../component/TextInput';
 import { signal, computed, } from '@preact/signals-react';
 import { BlogData, ImgUpData, defaulBlogData } from '../types/BlogData';
-import { handleAddData, handleUploadFile } from '../firebase/handler';
-import { alert } from '../component/Alert';
+import { handleAddData, handleUploadFile, handleGetDoc } from '../firebase/handler';
 import ImgInput from '../component/ImgInput';
 import ImgPreview from '../component/ImgPreview';
 import { Link } from 'react-router-dom';
 import { user } from '../firebase/signal';
 import Login from './Login';
 import DateInput from '../component/DateInput';
+import { notification } from 'antd';
 
 // signals
 export const blogData = signal<BlogData>(defaulBlogData as BlogData);
 export const imageList = signal<ImgUpData[]>([]);
-const thumbnailFile = signal<ImgUpData[]>([]); // actually only store 1 file
+const thumbnailFile = signal<ImgUpData[]>([]); // only take the first file as thumbnail
 // end signals
 
 const AdminPage: FC = () => {
-	const handleSubmit = async () => {
-		imageList.value.map((elem) => {
-			handleUploadFile(elem.file, `images/${blogData.value.title}/${elem.id}`);
-		});
-		const thumbnailURL = await handleUploadFile(thumbnailFile.value[0].file, `images/${blogData.value.title}/thumbnail`);
-		blogData.value = { ...blogData.value, thumbnailURL: thumbnailURL };
-		handleAddData(blogData.value, blogData.value.title, 'blogs').then(() => (alert.value = 'success'));
-	};
-
 	return (
 		<>
 			{computed(() => {
@@ -45,6 +36,9 @@ const AdminPage: FC = () => {
 							<Link to={'preview'}>
 								<Button type="default">Preview</Button>
 							</Link>
+							<Button type="dashed" onClick={handlePull}>
+								Pull from DB
+							</Button>
 							<div style={{ margin: '30px' }}></div>
 
 							<h2>Thumbnail</h2>
@@ -62,5 +56,18 @@ const AdminPage: FC = () => {
 			})}
 		</>
 	);
+};
+const handleSubmit = async () => {
+	imageList.value.map((elem) => {
+		handleUploadFile(elem.file, `images/${blogData.value.title}/${elem.id}`);
+	});
+	const thumbnailURL = await handleUploadFile(thumbnailFile.value[0].file, `images/${blogData.value.title}/thumbnail`);
+	blogData.value = { ...blogData.value, thumbnailURL: thumbnailURL };
+	handleAddData(blogData.value, blogData.value.title, 'blogs').then(() => notification.success({ message: 'success' }));
+};
+const handlePull = () => {
+	handleGetDoc('blogs', blogData.value.title)
+		.then((result) => (blogData.value = result as BlogData))
+		.catch(() => notification.error({ message: 'cannot find this ID on database' }));
 };
 export default AdminPage;

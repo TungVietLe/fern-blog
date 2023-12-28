@@ -1,30 +1,11 @@
 import React from 'react';
-import { notification } from 'antd';
-import { signal, computed } from '@preact/signals-core';
+import { Button, notification, Space } from 'antd';
 
-type AlertType = 'success' | 'info' | 'error' | 'warning' | null;
-export const alert = signal<AlertType>('info');
+type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
-export const AlertComponent: React.FC = () => {
+const App: React.FC = () => {
 	const [api, contextHolder] = notification.useNotification();
-
-	const openNotificationWithIcon = (type: AlertType) => {
-		if (type == null) return;
-		api[type]({
-			message: 'Success',
-			description: 'Well done!.',
-			onClose: () => {
-				alert.value = null;
-			},
-		});
-	};
-
-	return (
-		<>
-			{computed(() => {
-				openNotificationWithIcon(alert.value);
-				return <>{contextHolder}</>;
-			})}
-		</>
-	);
+	return <>{contextHolder}</>;
 };
+
+export default App;
