@@ -4,7 +4,7 @@ import { Button } from 'antd';
 import TextInput from '../component/TextInput';
 import { signal, computed, } from '@preact/signals-react';
 import { BlogData, ImgData, defaulBlogData } from '../types/BlogData';
-import { handleAddData, handleUploadFile, handleGetDoc } from '../firebase/handler';
+import { handleAddData, handleUploadFile, handleGetDoc, handleGetAllFilesInFolder } from '../firebase/handler';
 import ImgInput from '../component/ImgInput';
 import ImgPreview from '../component/ImgPreview';
 import { Link } from 'react-router-dom';
@@ -57,6 +57,8 @@ const AdminPage: FC = () => {
 		</>
 	);
 };
+
+// handlers_________________________________
 const handleSubmit = async () => {
 	imageList.value.map((elem) => {
 		//if file exist
@@ -68,9 +70,17 @@ const handleSubmit = async () => {
 	}
 	handleAddData(blogData.value, blogData.value.title, 'blogs').then(() => notification.success({ message: 'success' }));
 };
+
 const handlePull = () => {
 	handleGetDoc('blogs', blogData.value.title)
-		.then((result) => (blogData.value = result as BlogData))
+		.then((result) => {
+			blogData.value = result as BlogData;
+		})
 		.catch(() => notification.error({ message: 'cannot find this ID on database' }));
+	handleGetAllFilesInFolder(`images/${blogData.value.title}`).then((result) => {
+		imageList.value = result.filter((item) => item.id != 'thumbnail');
+		thumbnailFile.value = result.filter((item) => item.id == 'thumbnail');
+	});
 };
+
 export default AdminPage;

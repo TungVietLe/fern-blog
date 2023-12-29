@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import { handleGetDoc, handleGetFileURL, handleReadAllFiles } from '../firebase/handler';
+import { handleGetDoc, handleGetFileURL, handleGetAllFilesInFolder } from '../firebase/handler';
 import { BlogData, defaulBlogData, ImgData } from '../types/BlogData';
 import { signal, computed, batch } from '@preact/signals-react';
 import { Button, Empty, FloatButton } from 'antd';
@@ -28,7 +28,7 @@ const Blog: React.FC = () => {
 			.catch(() => {
 				console.log('no such blog found');
 			});
-		handleReadAllFiles(`images/${blogURL}`).then((result) => {
+		handleGetAllFilesInFolder(`images/${blogURL}`).then((result) => {
 			fetchedImgs.value = result;
 			console.log(result);
 		});

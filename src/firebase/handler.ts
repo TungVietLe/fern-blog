@@ -83,7 +83,7 @@ export async function  handleUploadFile(file:File, path:string) : Promise<string
     return url
 }
 
-export async function handleReadAllFiles(folder:string) : Promise<ImgData[]>
+export async function handleGetAllFilesInFolder(folder:string) : Promise<ImgData[]>
 {
     const result:ImgData[] = []
     const storageRef = ref(storage, `${folder}`);
