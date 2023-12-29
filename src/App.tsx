@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from "react-router-dom"; 
+import { BrowserRouter, Routes, Route, HashRouter } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
 import AlertComponent from './component/Alert';
 import NavBar from './component/NavBar';
@@ -15,18 +15,16 @@ import Danger from './pages/Admin/Danger';
 function App() {
 	return (
 		<ConfigProvider theme={customTheme}>
-			<BrowserRouter>
-				<Routes>
-					<Route path="/" element={<NavBar />}>
-						<Route index element={<Blogs />} />
-						<Route path="/blogs/*" element={<BlogRoutes />} />
-						<Route path="/admin/*" element={<AdminRoutes />} />
-						<Route path="*" element={<NotFound />} />
-					</Route>
-				</Routes>
-				<Footer />
-				<AlertComponent />
-			</BrowserRouter>
+			<Routes>
+				<Route path="/" element={<NavBar />}>
+					<Route index element={<Blogs />} />
+					<Route path="/blogs/*" element={<BlogRoutes />} />
+					<Route path="/admin/*" element={<AdminRoutes />} />
+					<Route path="*" element={<NotFound />} />
+				</Route>
+			</Routes>
+			<Footer />
+			<AlertComponent />
 		</ConfigProvider>
 	);
 }

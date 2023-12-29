@@ -25,6 +25,7 @@ body {
 	color: var(--text-primary);
 	font-family: var(--font);
 	line-height: 2;
+	margin: 0; padding: 0 20vw;
 }
 ::selection {
   color: rgb(255, 255, 255);
