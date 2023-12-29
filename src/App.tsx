@@ -3,15 +3,14 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ConfigProvider } from 'antd';
 import AlertComponent from './component/Alert';
 import NavBar from './component/NavBar';
-import Admin from './pages/Admin';
-import Preview from './pages/Preview';
+import Admin from './pages/Admin/Admin';
+import Preview from './pages/Admin/Preview';
 import Blogs from './pages/Blogs';
 import NotFound from './pages/404';
 import Blog from './pages/Blog';
 import Footer from './component/Footer';
 import { customTheme } from './styles/theme';
-
-
+import Danger from './pages/Admin/Danger';
 
 function App() {
 	return (
@@ -21,8 +20,7 @@ function App() {
 					<Route path="/" element={<NavBar />}>
 						<Route index element={<Blogs />} />
 						<Route path="/blogs/*" element={<BlogRoutes />} />
-						<Route path="/admin/preview" element={<Preview />} />
-						<Route path="/admin" element={<Admin />} />
+						<Route path="/admin/*" element={<AdminRoutes />} />
 						<Route path="*" element={<NotFound />} />
 					</Route>
 				</Routes>
@@ -34,12 +32,21 @@ function App() {
 }
 
 //Nested routes inside app main routes
-const BlogRoutes:React.FC = () => {
+const BlogRoutes: React.FC = () => {
 	return (
 		<Routes>
 			<Route path=":blogURL" element={<Blog />} />
 			<Route path="/" element={<Blogs />} />
 		</Routes>
-	)
-}
+	);
+};
+const AdminRoutes: React.FC = () => {
+	return (
+		<Routes>
+			<Route path="/preview" element={<Preview />} />
+			<Route path="/danger" element={<Danger />} />
+			<Route path="/" element={<Admin />} />
+		</Routes>
+	);
+};
 export default App;

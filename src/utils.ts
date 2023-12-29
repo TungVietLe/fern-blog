@@ -34,8 +34,8 @@ export async function  DeleteUnusedFilesInStorage() {
     const allIDs = await handleGetAllFileIDs("/images")
     const unusedIDs = allIDs.filter(item => !usedID.includes(item))
 
-    unusedIDs.forEach((item)=>{
-        handleDeleteAllFilesInFolder(`images/${item}`)
-        .then(()=>{console.log(`DELETE FILES IN ${item}`)})
-    })
+    await Promise.all(unusedIDs.map(async(item)=>{
+        await handleDeleteAllFilesInFolder(`images/${item}`)
+        console.log(`DELETE FILES IN ${item}`)
+    }))
 }

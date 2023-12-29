@@ -1,16 +1,16 @@
 import React from 'react';
 import { FC } from 'react';
 import { Button } from 'antd';
-import TextInput from '../component/TextInput';
-import { signal, computed, } from '@preact/signals-react';
-import { BlogData, ImgData, defaulBlogData } from '../types/BlogData';
-import { handleAddData, handleUploadFile, handleGetDoc, handleGetAllFilesInFolder } from '../firebase/handler';
-import ImgInput from '../component/ImgInput';
-import ImgPreview from '../component/ImgPreview';
+import TextInput from '../../component/TextInput';
+import { signal, computed } from '@preact/signals-react';
+import { BlogData, ImgData, defaulBlogData } from '../../types/BlogData';
+import { handleAddData, handleUploadFile, handleGetDoc, handleGetAllFilesInFolder } from '../../firebase/handler';
+import ImgInput from '../../component/ImgInput';
+import ImgPreview from '../../component/ImgPreview';
 import { Link } from 'react-router-dom';
-import { user } from '../firebase/signal';
+import { user } from '../../firebase/signal';
 import Login from './Login';
-import DateInput from '../component/DateInput';
+import DateInput from '../../component/DateInput';
 import { notification } from 'antd';
 
 // signals
@@ -39,6 +39,11 @@ const AdminPage: FC = () => {
 							<Button type="dashed" onClick={handlePull}>
 								Pull from DB
 							</Button>
+							<Link to={'danger'}>
+								<Button danger type="default">
+									Danger Zone
+								</Button>
+							</Link>
 							<div style={{ margin: '30px' }}></div>
 
 							<h2>Thumbnail</h2>
