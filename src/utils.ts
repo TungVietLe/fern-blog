@@ -1,26 +1,25 @@
 import parse from "html-react-parser"
 import { handleDeleteAllFilesInFolder, handleGetAllDataInCollection, handleGetAllFileIDs } from "./firebaseUtils/handler";
 import { ImgData } from "./types/BlogData";
+import { marked } from "marked";
 
 export function DecodeThenParseToHTML(inputString: string, imageSrc: ImgData[]) {
     const replaced =
-            '<pre>' +
             inputString
                 .replace(/{{image(\d+)}}/g, (match, id) => {
                     const url = imageSrc.find((elem) => elem.id == id)?.url;
-                    return `<img src="${url}" />`;
+                    return `![${id}](${url})`;
                 })
-                .replace(/```([^`]+)```/g, (match, inside) => {
-                    return `<pre class="code">${inside}</pre>`;
-                })
-                .replace(/``([^`]+)``/g, (match, inside) => {
-                    return `<mark>${inside}</mark>`;
-                })
-                .replace(/`([^`]+)`/g, (match, inside) => {
-                    return `<mark class="key">${inside}</mark>`;
-                }) +
-            '</pre>';
-        return parse(replaced);
+    //             .replace(/```([^`]+)```/g, (match, inside) => {
+    //                 return `<pre class="code">${inside}</pre>`;
+    //             })
+    //             .replace(/``([^`]+)``/g, (match, inside) => {
+    //                 return `<mark>${inside}</mark>`;
+    //             })
+    //             .replace(/`([^`]+)`/g, (match, inside) => {
+    //                 return `<mark class="key">${inside}</mark>`;
+    //             }) +
+        return parse(marked.parse(replaced) as string); //parse markdown then parse html
 
 }
 
