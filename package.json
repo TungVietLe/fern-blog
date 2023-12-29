@@ -2,6 +2,7 @@
   "name": "fern-blog",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://tungvietle.github.io/fern-blog",
   "dependencies": {
     "@preact/signals-react": "^2.0.0",
     "@testing-library/jest-dom": "^5.17.0",
@@ -20,6 +21,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -44,6 +47,7 @@
     ]
   },
   "devDependencies": {
+    "gh-pages": "^6.1.1",
     "react-router-dom": "^6.21.1",
     "typescript": "^4.4.4"
   }

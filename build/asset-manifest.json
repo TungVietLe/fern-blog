@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/fern-blog/static/css/main.9794513d.css",
+    "main.js": "/fern-blog/static/js/main.a6c482c6.js",
+    "static/js/787.5d5fa403.chunk.js": "/fern-blog/static/js/787.5d5fa403.chunk.js",
+    "index.html": "/fern-blog/index.html",
+    "main.9794513d.css.map": "/fern-blog/static/css/main.9794513d.css.map",
+    "main.a6c482c6.js.map": "/fern-blog/static/js/main.a6c482c6.js.map",
+    "787.5d5fa403.chunk.js.map": "/fern-blog/static/js/787.5d5fa403.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9794513d.css",
+    "static/js/main.a6c482c6.js"
+  ]
+}
