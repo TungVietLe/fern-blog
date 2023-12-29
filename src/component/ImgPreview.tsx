@@ -1,12 +1,16 @@
 import React, {useState} from 'react';
-import {Signal, computed} from "@preact/signals-react"
-import { Button } from 'antd';
+import { Signal, computed, signal } from '@preact/signals-react';
+import { Button, Input } from 'antd';
 import { ImgData } from '../types/BlogData';
+const { TextArea } = Input;
 
 type ImgPreviewProps = {
 	data: Signal<ImgData[]>;
+	customFileName?: boolean;
 };
-const ImgPreview: React.FC<ImgPreviewProps> = ({ data }) => {
+const ImgPreview: React.FC<ImgPreviewProps> = ({ data, customFileName = false }) => {
+	const desireId = signal<string>('');
+	const current = signal<number>(0); // current ID to manipulate
 	const handleDeleteIndex = (i: number) => {
 		const arr = [...data.value];
 		arr.splice(i, 1);
@@ -14,13 +18,42 @@ const ImgPreview: React.FC<ImgPreviewProps> = ({ data }) => {
 	};
 	return (
 		<>
+			{
+				// computed since value depend on desireID
+				computed(
+					() =>
+						customFileName && (
+							<>
+								<TextArea
+									value={desireId.value.replace(/\D/g, '')}
+									onChange={(e) => {
+										desireId.value = e.target.value.replace(/\D/g, ''); //only take digit
+										const temp = [...data.value];
+										temp[current.value].id = desireId.value; // change current id
+										data.value = temp;
+									}}
+									placeholder="Image ID (number only)"
+									autoSize
+									disabled={data.value[current.value] == null}
+								/>
+							</>
+						)
+				)
+			}
 			{computed(() =>
 				data.value.map((f, index) => {
 					return (
-						<div key={index} style={{ display: 'flex' }}>
+						<div key={index} style={{ display: 'flex', alignItems: 'center' }}>
 							<p>{f.id}</p>
-							<img src={f.url} key={index} />
-							<Button danger type="dashed" onClick={() => (data.value = handleDeleteIndex(index))}>
+							<img
+								src={f.url}
+								key={index}
+								width="50%"
+								onClick={() => {
+									current.value = index;
+								}}
+							/>
+							<Button disabled={index != current.value} danger type="dashed" onClick={() => (data.value = handleDeleteIndex(index))}>
 								Del
 							</Button>
 						</div>

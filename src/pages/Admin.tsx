@@ -47,8 +47,8 @@ const AdminPage: FC = () => {
 							<TextInput destination={blogData} />
 							<DateInput destination={blogData} />
 							<h2>Media</h2>
-							<ImgInput destination={imageList} customFileName />
-							<ImgPreview data={imageList} />
+							<ImgInput destination={imageList} />
+							<ImgPreview data={imageList} customFileName />
 						</>
 					);
 				}
