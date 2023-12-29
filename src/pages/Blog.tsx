@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import { handleGetDoc, handleGetFileURL, handleGetAllFilesInFolder } from '../firebase/handler';
+import { handleGetDoc, handleGetFileURL, handleGetAllFilesInFolder } from '../firebaseUtils/handler';
 import { BlogData, defaulBlogData, ImgData } from '../types/BlogData';
 import { signal, computed, batch } from '@preact/signals-react';
 import { Button, Empty, FloatButton } from 'antd';

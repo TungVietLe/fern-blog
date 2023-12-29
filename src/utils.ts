@@ -1,5 +1,5 @@
 import parse from "html-react-parser"
-import { handleDeleteAllFilesInFolder, handleGetAllDataInCollection, handleGetAllFileIDs } from "./firebase/handler";
+import { handleDeleteAllFilesInFolder, handleGetAllDataInCollection, handleGetAllFileIDs } from "./firebaseUtils/handler";
 import { ImgData } from "./types/BlogData";
 
 export function DecodeThenParseToHTML(inputString: string, imageSrc: ImgData[]) {

@@ -4,8 +4,8 @@ import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/ico
 import type { MenuProps } from 'antd';
 import {Button} from "antd"
 import { Menu } from 'antd';
-import { handleSignInWithPopup, handleSignOut } from '../firebase/handler';
-import {user} from "../firebase/signal"
+import { handleSignInWithPopup, handleSignOut } from '../firebaseUtils/handler';
+import { user } from '../firebaseUtils/signal';
 import { computed } from '@preact/signals-react';
 
 const signOutBtn = computed(()=>user.value && <Button type='dashed' onClick={handleSignOut}>Sign Out</Button>)

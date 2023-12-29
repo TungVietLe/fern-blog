@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { Avatar, List, Tag } from 'antd';
-import { handleGetAllDataInCollection } from '../firebase/handler';
+import { handleGetAllDataInCollection } from '../firebaseUtils/handler';
 import { BlogData } from '../types/BlogData';
 import { Link } from 'react-router-dom';
 import { signal, computed } from '@preact/signals-react';
