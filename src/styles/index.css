@@ -53,6 +53,7 @@ pre.code {
 mark{
 	padding: 3px 6px;
 	background-color: gold;
+	color: var(--text-primary);
 	border-radius: 5px;
 }
 mark.key {

@@ -1,5 +1,5 @@
 import { collection, getDocs, doc, setDoc, getDoc, orderBy, query } from "firebase/firestore";
-import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytes, listAll, getDownloadURL, deleteObject } from "firebase/storage";
 
 import { db, storage, googleProvider } from './config';
 import { BlogData, ImgData } from '../types/BlogData';
@@ -120,4 +120,22 @@ export async function handleGetFileURL(path:string, name:string) : Promise<strin
         // Handle errors
     });
     return "fail to fetch"
+}
+
+export async function handleGetAllFileIDs(pathToFolder:string) : Promise<string[]>
+{
+    const storageRef = ref(storage, pathToFolder);
+    const result = await listAll(storageRef)
+    const listOfIDs:string[] = []
+    result.prefixes.forEach((item)=>{listOfIDs.push(item.name)})
+    return listOfIDs
+}
+
+export async function handleDeleteAllFilesInFolder(pathToFolder: string) : Promise<void>
+{
+    const storageRef = ref(storage, pathToFolder);
+    const result = await listAll(storageRef)
+    await Promise.all(result.items.map(async (item) => {
+      await deleteObject(item);
+    }))
 }

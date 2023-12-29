@@ -62,7 +62,7 @@ const handleSubmit = async () => {
 		//if file exist
 		elem.file && handleUploadFile(elem.file, `images/${blogData.value.title}/${elem.id}`);
 	});
-	if (thumbnailFile.value[0].file) {
+	if (thumbnailFile.value[0]?.file) {
 		const thumbnailURL = await handleUploadFile(thumbnailFile.value[0].file, `images/${blogData.value.title}/thumbnail`);
 		blogData.value = { ...blogData.value, thumbnailURL: thumbnailURL };
 	}

@@ -13,10 +13,19 @@ const Blog: React.FC = () => {
 		console.log('TRY TO GET BLOG DATA');
 	}, []);
 
-	return body;
+	return (
+		<>
+			<h1>
+				The <mark>Random</mark> Blogs
+			</h1>
+			<p>Reflecting on learned things. Crafts, personal, and technical details.</p>
+			<div style={{ margin: '60px 0' }}></div>
+			{blogsListing}
+		</>
+	);
 };
 
-const body = computed(() => {
+const blogsListing = computed(() => {
 	return (
 		<List
 			itemLayout="horizontal"

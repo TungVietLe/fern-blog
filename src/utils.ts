@@ -1,4 +1,5 @@
 import parse from "html-react-parser"
+import { handleDeleteAllFilesInFolder, handleGetAllDataInCollection, handleGetAllFileIDs } from "./firebase/handler";
 import { ImgData } from "./types/BlogData";
 
 export function DecodeThenParseToHTML(inputString: string, imageSrc: ImgData[]) {
@@ -21,4 +22,20 @@ export function DecodeThenParseToHTML(inputString: string, imageSrc: ImgData[]) 
             '</pre>';
         return parse(replaced);
 
+}
+
+export async function  DeleteUnusedFilesInStorage() {
+    const usedID:string[] = []
+    await handleGetAllDataInCollection("blogs").then((result) => {
+        result.map((elem)=>{
+            usedID.push(elem.title)
+        })
+    })
+    const allIDs = await handleGetAllFileIDs("/images")
+    const unusedIDs = allIDs.filter(item => !usedID.includes(item))
+
+    unusedIDs.forEach((item)=>{
+        handleDeleteAllFilesInFolder(`images/${item}`)
+        .then(()=>{console.log(`DELETE FILES IN ${item}`)})
+    })
 }
