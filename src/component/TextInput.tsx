@@ -35,13 +35,6 @@ const TextInput: React.FC<TextInputProps> = ({ destination }) => {
 							autoSize
 						/>
 						<div style={{ margin: '24px 0' }} />
-						<TextArea
-							value={destination.value.content}
-							onChange={(e) => (destination.value = { ...destination.value, content: e.target.value })}
-							placeholder="Content"
-							autoSize={{ minRows: 6, maxRows: 20 }}
-						/>
-						<div style={{ margin: '24px 0' }} />
 					</>
 				);
 			})}

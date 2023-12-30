@@ -1,7 +1,7 @@
 import React from 'react';
 import { SmileOutlined } from '@ant-design/icons';
 import { Button, Result } from 'antd';
-import { handleSignInWithPopup } from '../../firebaseUtils/handler';
+import { handleSignInWithPopup } from '../../../firebaseUtils/handler';
 import { useNavigate } from 'react-router-dom';
 const Login: React.FC = () => {
 	const navigateTo = useNavigate();

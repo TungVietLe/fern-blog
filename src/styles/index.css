@@ -40,9 +40,18 @@ img {
 code {
 	font-family: var(--font);
 	text-wrap: wrap;
-	font-weight: 400;
+	font-weight: inherit;
 	padding: 3px 6px;
 	background-color: rgb(218, 218, 218);
+	color: var(--text-primary);
+	border-radius: 5px;
+}
+mark {
+	font-family: var(--font);
+	text-wrap: wrap;
+	font-weight: inherit;
+	padding: 3px 6px;
+	background-color:gold;
 	color: var(--text-primary);
 	border-radius: 5px;
 }
@@ -84,3 +93,9 @@ a:hover {
 	text-decoration-color: transparent;
 	border-radius: 4px;
 }
+
+.wmde-markdown-var.w-md-editor.w-md-editor-show-live {
+	position: absolute; left: 0; right: 0; 
+	height: 85% !important;
+}
+
