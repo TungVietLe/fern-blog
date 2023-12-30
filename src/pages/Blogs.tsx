@@ -4,6 +4,7 @@ import { handleGetAllDataInCollection } from '../firebaseUtils/handler';
 import { BlogData } from '../types/BlogData';
 import { Link } from 'react-router-dom';
 import { signal, computed } from '@preact/signals-react';
+import Logo from 'assets/logo';
 
 const pulledBlogsData = signal<BlogData[]>([]);
 const Blog: React.FC = () => {
@@ -15,11 +16,9 @@ const Blog: React.FC = () => {
 
 	return (
 		<>
-			<h1>
-				The <mark>Random</mark> Blogs
-			</h1>
+			<Logo />
 			<p>Reflecting on learned things. Crafts, personal, and technical details.</p>
-			<div style={{ margin: '60px 0' }}></div>
+			<div style={{ margin: '130px 0' }}></div>
 			{blogsListing}
 		</>
 	);
