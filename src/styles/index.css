@@ -5,6 +5,13 @@
 	--text-primary: rgb(79, 79, 79);
 	--font: 'Inter', sans-serif;
 }
+/* input button  */
+::file-selector-button {
+	border: none; border-radius: 8px;
+  	background-color: orange;
+	font: var(--font); font-weight: bold;
+	padding: 15px; margin: 15px;
+}
 /* scroll bar */
 ::-webkit-scrollbar {
     width: 0.65vw;

@@ -12,12 +12,15 @@ const ImgInput: React.FC<ImgInputProps> = ({ destination }) => {
 		<>
 			<input
 				type="file"
+				multiple
 				onChange={(e) => {
-					if (e.target.files && e.target.files[0]) {
-						const newFile = e.target.files[0];
-						const newImgData = { id: newFile.name.replace(/\D/g, ''), file: newFile, url: URL.createObjectURL(newFile) };
-						destination.value = [...destination.value, newImgData];
-						console.log(destination.value);
+					if (e.target.files != null) {
+						[...e.target.files].map((elem) => {
+							const newFile = elem;
+							const newImgData = { id: newFile.name.replace(/\D/g, ''), file: newFile, url: URL.createObjectURL(newFile) };
+							destination.value = [...destination.value, newImgData];
+							console.log(destination.value);
+						});
 					} else {
 						console.warn('No file selected');
 					}

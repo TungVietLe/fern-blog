@@ -42,16 +42,20 @@ const ImgPreview: React.FC<ImgPreviewProps> = ({ data, customFileName = false })
 			}
 			{computed(() =>
 				data.value.map((f, index) => {
+					const activeBg = current.value == index ? 'orange' : 'transparent';
 					return (
-						<div key={index} style={{ display: 'flex', alignItems: 'center' }}>
+						<div
+							key={index}
+							style={{ display: 'inline-flex', alignItems: 'center', borderRadius: '10px', padding: '10px', backgroundColor: activeBg }}
+						>
 							<p>{f.id}</p>
 							<img
 								src={f.url}
 								key={index}
-								width="50%"
 								onClick={() => {
 									current.value = index;
 								}}
+								style={{ width: '15vw' }}
 							/>
 							<Button disabled={index != current.value} danger type="dashed" onClick={() => (data.value = handleDeleteIndex(index))}>
 								Del
