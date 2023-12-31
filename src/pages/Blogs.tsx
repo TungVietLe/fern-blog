@@ -10,7 +10,7 @@ const pulledBlogsData = signal<BlogData[]>([]);
 const Blog: React.FC = () => {
 	const effect = useEffect(() => {
 		if (pulledBlogsData.value.length != 0) return;
-		handleGetAllDataInCollection('blogs').then((response) => (pulledBlogsData.value = response));
+		handleGetAllDataInCollection('blogs').then((response) => (pulledBlogsData.value = response.filter((elem) => elem.isPublished == true)));
 		console.log('TRY TO GET BLOG DATA');
 	}, []);
 

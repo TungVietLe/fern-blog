@@ -8,7 +8,7 @@ import { handleAddData, handleUploadFile, handleGetDoc, handleGetAllFilesInFolde
 import ImgInput from 'component/ImgInput';
 import ImgPreview from 'component/ImgPreview';
 import DateInput from 'component/DateInput';
-import { notification } from 'antd';
+import { notification, Switch } from 'antd';
 import { blogData, imageList, thumbnailFile } from '../signal';
 
 const Media: React.FC = () => {
@@ -23,6 +23,13 @@ const Media: React.FC = () => {
 						<Button type="dashed" onClick={handlePull}>
 							Pull from DB
 						</Button>
+						<Switch
+							value={blogData.value.isPublished}
+							defaultChecked
+							onChange={(e) => (blogData.value = { ...blogData.value, isPublished: e })}
+							checkedChildren="published"
+							unCheckedChildren="draft"
+						/>
 						<h2>Media</h2>
 						<div style={{ margin: '30px' }}></div>
 						<ImgInput destination={thumbnailFile} />

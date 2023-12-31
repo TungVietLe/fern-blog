@@ -6,12 +6,14 @@ export type BlogData = {
 	description:string,
 	date:Timestamp,
 	tag: string,
-	thumbnailURL: string
+	thumbnailURL: string, 
+	isPublished: boolean
 }
 export const defaulBlogData = {
 	title: "",
 	content: "",
-}
+	isPublished: false
+} 
 
 export type ImgData = { //upload
 	id: string,
